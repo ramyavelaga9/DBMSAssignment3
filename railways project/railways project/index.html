@@ -1,0 +1,535 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+<link rel="stylesheet" href="animate.css">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+
+
+<script type="text/javascript" src="jquery.js"></script>
+
+
+
+ <title>
+     Railway Booking
+ </title>
+
+ <style>
+ 
+ body {font-family: "Comic Sans MS", cursive, sans-serif;padding-left: 25%;padding-right: 25%; background-color: black;background-repeat: no-repeat;background-size: cover;position: relative;}
+ #signIn {display: none; width:40%; font-size: 24px;position: absolute;left: 4%;background-color: rgb(102, 153, 153,.2);margin-top: 0%;}
+ #signUp {display:none;height: auto; width:40%; font-size: 24px;position: absolute;right:4%;background-color: rgb(102, 153, 153,.2);margin-top: 0%;}
+
+ .container {
+    padding: 8px;
+}
+
+#wrapper{
+    background-color: red;
+width: 100%;
+margin: 0 auto;
+
+
+}
+
+#welcomePage
+{
+
+display:none;
+    position: fixed; /* Stay in place */
+    z-index: 1; /* Sit on top */
+    padding: 8px; /* Location of the box */
+    left: 0;
+    top: 0;
+    width: 100%; /* Full width */
+    height: 100%; /* Full height */
+    overflow: auto; /* Enable scroll if needed */
+    
+    
+}
+
+#planJourney {
+
+
+    position:absolute;
+     width: 40%;
+     left: 4%;
+     top: 18%;
+     background-color:rgb(102, 153, 153,.2);
+      padding: 8px;
+      
+
+}
+
+#ticketList {
+
+ position: absolute;
+ width: 40%;
+ right: 4%;
+ top: 18%;
+
+ background-color:rgb(102, 153, 153,.2);
+ padding: 8px;
+
+
+
+
+}
+
+input[type=text], input[type=password] , input[type=number]{
+    width: 100%;
+    padding: 12px 20px;
+    margin: 8px 0;
+    display: inline-block;
+    border: 1px solid #ccc;
+    box-sizing: border-box;
+}
+
+.imgcontainer {
+    text-align: center;
+    margin: 24px 0 12px 0;
+}
+
+img.avatar {
+    width: 40%;
+    border-radius: 50%;
+}
+
+button {
+    
+    color: white;
+    padding: 14px 20px;
+    font-size: 25px;
+    margin: 8px 0;
+    border: none;
+    cursor: pointer;
+    width: 100%;
+}
+
+#left
+{
+background-color: #4CAF50;
+
+}
+
+#right
+{
+
+background-color: red;
+
+}
+ </style>
+
+
+</head>
+
+
+<body background="background.png">
+
+
+
+<form  class="animated zoomIn" id="signIn" action="welcome.php" method="post">
+<div class="imgcontainer">
+ <img src="logoRailways.png" alt="Avatar">
+</div>
+
+<div class="container">
+<label for="username" style="color:whitesmoke"><b>Name</b></label>
+<input id="endUser" type="text" placeholder="Enter Username" name="username" required>
+
+<label for="psw" style="color:whitesmoke"><b>Password</b></label>
+<input type="password" placeholder="Enter Password" name="psw" required>
+
+
+<button type="submit" id="left"><b>LogIn</b></button>
+
+</div>
+
+
+
+</form>
+
+
+<form class="animated zoomIn" id="signUp" method="POST" >
+        <div class="imgcontainer">
+         <img src="signUp.png" alt="Avatar">
+        </div>
+        
+        <div class="container">
+        <label for="username" style="color:whitesmoke"><b>Name</b></label>
+        <input type="text" placeholder="Enter Username" name="username" required>
+        
+        <label for="psw" style="color:whitesmoke"><b>Password</b></label>
+        <input type="password" placeholder="Enter Password" name="psw" required>
+        
+        
+        <label for="aadharNumber" style="color:whitesmoke"><b>Aadhar Number</b></label>
+        <input type="number" placeholder="Enter Your Aadhar" name="aadharNumber" required>
+
+        <label for="bankAccount" style="color:whitesmoke"><b>Bank Account</b></label>
+        <input type="number" placeholder="Enter Bank Account Number" name="bankAccount" required>
+
+        <label for="initialAmount" style="color:whitesmoke"><b>Money In Account</b></label>
+        <input type="number" placeholder="Money in Rupees" name="initialAmount" required>
+
+        <p id="messageToUser" style="background-color:rgba(0,0,0,.2);font-size:20px;color:red"></p>
+
+        <button type="submit" id="right"><b>SignUp</b></button>
+        
+        </div>
+        
+        
+        
+        </form>
+<div class="animated fadeIn" id="welcomePage" >
+
+  <div style="width:100%;height: auto;display: flex;justify-content: space-between;">
+
+   <h1 id="welcomeName" class="animated infinite pulse" style="color:black">Welcome <span >Nikhil</span></h1>
+   <button id="logOut" style=" font-size: 24px;width: 8%; color:white;margin-right: 2%;padding: 0%;background-color:royalblue;border-bottom-color: rosybrown">LogOut</button>
+
+
+  </div>
+
+   <div  id="planJourney" >
+
+ <h1 style="font-size:20px;background-color:teal;margin-top:0;margin-left:0;color: white;padding: 8px">PlAN YOUR JOURNEY HERE:</h1>
+<div style="margin-top:4px; width:100%; position:relative;">
+<form id="passInfo" action="addTrain.php" method="POST">
+    <p id="USER" name="USER">hello</p>
+    <input  id="fromPlace" placeholder="From Place" type="text"style="float:left;width:50%;font-size:20px;padding: 2px;">
+    <input id="toPlace" placeholder="To Place" type="text"style="float:left;width:50%;font-size:20px;padding: 2px;">
+    <select id="trainsList" style="float:clear;margin:0 auto;width: 50%;font-size: 20px;" name="trains">
+        <option value="train1">train 1</option>
+        <option value="train2">train 2</option>
+        <option value="train3">train 3</option>
+    </select>
+    <input id="dateOfJ" name="dateOfJ" id="dataOfJ" type="date" style="font-size:20px">
+    <input id="age" placeholder="Age" type="number"style="float:clear;width:50%;font-size:20px;padding: 2px;">
+    <input name="passengerName" id="passengerName" placeholder="Passenger Name" type="text"style="float:left;width:50%;font-size:20px;padding: 2px;">
+   <ul>
+
+    <li>PASSENGERS LIST:</li>
+
+
+   </ul>
+
+   <ol id="listOfP">
+
+
+   </ol>
+   
+   
+    <button id="addPassenger" style="width:30%;background-color:green;font-size: 15px;padding: 8px">ADD Passenger</button>
+   
+   
+   
+    <p style="font-size:20px;background-color:black;color: white">Bank Account: <span id="bankDetails" style="text-decoration:underline">16011171571787</span><span style="margin-left:8%">Amount Left: </span><span style="text-decoration:underline;">500/-</span></p>
+
+    <button type="submit" id="bookTicket" style="background-color:teal" >Book Ticket</button>
+</form>
+
+</div>
+
+
+   </div>
+  
+<div id="ticketList" >
+        <h1 style="font-size:20px;background-color:rgb(255, 0, 102);margin-top:0;margin-left:0;color: white;padding: 8px">YOUR TICKET LIST:</h1>
+<form action="cancelTrain.php" method="POST">
+ <table id="ticketsList" style="width: 100%;">
+<tr>
+<th>Name</th>
+<th>DOJ</th>
+<th>TKT Num</th>
+<th>Status</th>
+<th>Select</th>
+</tr>
+
+</table>
+
+<button id="ct" type="submit" style="background-color:rgb(255, 0, 102)">Cancel Ticket</button>
+
+</form>
+
+</div>
+
+</div>
+
+
+</body>
+
+
+
+<script type="text/javascript">
+
+    $(document).ready(function()
+        {
+
+
+var endUser="";
+
+    
+goToHomepage();
+
+   $("#logOut").click(function(){
+
+
+   goToHomepage();
+
+
+   });
+
+   $("#bookTicket").click(function(event){
+
+   event.preventDefault();
+   var un=endUser;
+   var ARRAY={"username":un};
+
+      $.ajax(
+        {
+url:"bookingConfirmed.php",
+method:"POST",
+data:{result:JSON.stringify(ARRAY)},
+dataType:"text",
+success:function(result)
+{
+
+$("#listOfP").html("");
+fillTickets(endUser);
+
+}
+
+        }
+    );
+
+   });
+
+  $("#addPassenger").click(function(event){
+
+event.preventDefault();
+    var un=endUser;
+    var passengerName=$("#passengerName").val();
+    var doj=$("#dateOfJ").val();
+    var tn="1234";
+    var st="pending";
+    var ARRAY={"username":un,"passengerName":passengerName,"dateOfJ":doj,"ticketNum":tn,"status":st};
+    
+
+    $.ajax(
+        {
+url:"addTrain.php",
+method:"POST",
+data:{result:JSON.stringify(ARRAY)},
+dataType:"text",
+success:function(result)
+{
+
+$("#USER").text(result);
+fillTickets(endUser);
+
+}
+
+        }
+    );
+
+    $("#passengerName").val("");
+    $("#listOfP").append("<li>"+passengerName+"</li>");
+    $("#fromPlace").val("");
+    $("#toPlace").val("");
+    $("#dateOfJ").val("");
+    $("#age").val("");
+
+  });
+
+   $("#left").click(function(event){
+    
+
+    endUser=$("#endUser").val();
+    fillTickets(endUser);
+    event.preventDefault();
+    
+    $.ajax({
+    url: "welcome.php",
+  method:"POST",
+ data:$("#signIn").serialize(),
+ dataType:"text",
+ success: function(strMessage)
+ {
+
+if(strMessage!=0)
+{
+    goToWelcomePage();
+    fillTrainsList();
+    $("#welcomeName span").text(endUser);
+    $("#USER").text(endUser);
+    putBankAccount(endUser);
+
+}
+ 
+ }
+    })
+   });
+
+
+ function fillTrainsList()
+ {
+
+             $.ajax(
+        {
+url:"trainNames.php",
+method:"POST",
+data:"",
+dataType:"text",
+success:function(result)
+{
+    $("#trainsList").html("");
+$("#trainsList").append(result);
+}
+
+        }
+    ); 
+
+
+ }
+
+   function putBankAccount(user)
+   {
+
+ var ARRAY={"username":user};
+     
+     $.ajax(
+     {
+url:"bankDetails.php",
+method:"POST",
+data:{result:JSON.stringify(ARRAY)},
+dataType:"text",
+success:function(result)
+{
+$("#bankDetails").html(result);
+}
+
+     }
+ );
+
+
+   }
+
+    function fillTickets(user)
+    {
+      
+        var ARRAY={"username":user};
+     
+        $.ajax(
+        {
+url:"tickets.php",
+method:"POST",
+data:{result:JSON.stringify(ARRAY)},
+dataType:"text",
+success:function(result)
+{
+    $("#ticketsList").html("<tr><th>Name</th><th>DOJ</th><th>TKT Num</th><th>Status</th><th>Select</th></tr>");
+$("#ticketsList").append(result);
+}
+
+        }
+    );
+
+
+
+    }
+
+$("#ct").click(function(event){
+
+event.preventDefault();
+deleteRows();
+
+});
+
+   function deleteRows()
+   {
+
+        $.each($("input[type='checkbox']:checked"), function(){            
+            
+            var pn=$(this).parent().parent('.ROW').children('#pn').html();
+            var d=$(this).parent().parent('.ROW').children('#d').html();
+            var ARRAY={"passengerName":pn,"date":d};
+
+    $.ajax(
+        {
+url:"deleteTicket.php",
+method:"POST",
+data:{result:JSON.stringify(ARRAY)},
+dataType:"text",
+success:function(result)
+{
+
+fillTickets(endUser);
+
+
+}
+
+        }
+    );
+
+
+
+            });
+
+   }
+
+
+
+    $("#right").click(function(event){
+    
+    
+    event.preventDefault();
+    $.ajax({
+    url: "validate.php",
+    method: "POST",
+    data:$("#signUp").serialize(),
+    dataType:"text",
+    success: function(strMessage)
+         {
+    
+    $("#messageToUser").text(strMessage);
+    
+         }
+    })
+    
+    
+    });
+    
+
+    function goToWelcomePage()
+    {
+
+        $("#signUp").css("display","none");
+        $("#signIn").css("display","none");
+        $("#heading").css("display","none");
+        $("#welcomePage").css("display","unset");
+
+    }
+
+    function goToHomepage()
+    {
+       
+        $("#signUp").css("display","unset");
+        $("#signIn").css("display","unset");
+        $("#heading").css("display","unset");
+        $("#welcomePage").css("display","none");
+        
+
+    }
+    
+    // end of JS file is here
+        }
+    )
+    
+    
+    </script>
+
+
+
+</html>
+
